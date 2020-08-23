@@ -31,8 +31,12 @@ RUN chmod +x /etc/init.d/tomcat7
 
 # -- Install BigBlueButton
 RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
-RUN apt-get install -y bigbluebutton 
-RUN apt-get install -y bbb-demo 
+RUN apt-get install -y bigbluebutton || :
+RUN gem update --system
+RUN gem install bundler -v 1.16.1
+RUN apt-get install -y bigbluebutton
+RUN apt-get install -y bbb-demo
+
 
 # -- Install mongodb (for HTML5 client)
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
